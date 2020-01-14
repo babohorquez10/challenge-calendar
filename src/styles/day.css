@@ -1,0 +1,44 @@
+.day {
+  height: 12vh;
+  border-bottom: 1px solid #E0E0E0;
+  border-right: 1px solid #E0E0E0;
+  padding: 5px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.day:hover {
+  background-color: #E8E8E8;
+}
+
+a.day-anchor {
+  text-decoration: none;
+  color: #000;
+}
+
+.day, .day-title {
+  width: 10vw;
+}
+
+.day-title {
+  text-align: center;
+  font-weight: bold;
+  color: #FFF;
+  background-color: #6699FF;
+}
+
+.day.left-border {
+  border-left: 1px solid #E0E0E0;
+}
+
+.day.top-border {
+  border-top: 1px solid #E0E0E0;
+}
+
+.weekend {
+  background-color: #F8F8F8;
+}
+
+.day.weekend .day-number {
+  color: #6699FF;
+}
