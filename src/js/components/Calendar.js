@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Week from './Week';
+import Form from './Form';
 
 const mapStateToProps = state => {
-  return { days: state.days };
+  return { days: state.days, selectedDay: state.selectedDay };
 };
 
 class ConnectedCalendar extends React.Component {
@@ -22,9 +23,24 @@ class ConnectedCalendar extends React.Component {
         </div>
         {
           this.mapDays().map(el => (
-          <Week days={el}>
-          </Week>
+          <Week days={el} />
         ))}
+        <div className="modal fade" id="modalForm" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Add new reminder</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                {'Day: ' + this.props.selectedDay}
+                <Form />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -43,21 +59,6 @@ class ConnectedCalendar extends React.Component {
     return arr;
   }
 }
-
-// const ConnectedCalendar = ({ days }) => (
-//   <div className="container">
-//     <div className="row">
-      
-//     {
-//     days.map(el => (
-//       <div className="col-1">
-//         <span key={el.id}>{el.id}, {el.reminders.map(reminder => <span>{reminder.title}</span> )}</span>
-//       </div>
-//     ))}
-//     </div>
-//   </div>
-  
-// );
 
 const Calendar = connect(mapStateToProps)(ConnectedCalendar);
 
