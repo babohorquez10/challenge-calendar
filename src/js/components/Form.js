@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { addReminder } from '../actions/index';
 import '../../styles/form.css';
 import { colors } from '../constants/action-types';
+import { Button } from 'react-bootstrap';
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -16,6 +17,8 @@ const mapStateToProps = state => {
 
 class ConnectedForm extends Component {
 
+  maxChars = 30;
+
   constructor(props) {
     super(props);
 
@@ -23,15 +26,29 @@ class ConnectedForm extends Component {
       title: '',
       time: '',
       color: 0,
-      city: ''
+      city: '',
+      charsRemaining: this.maxChars
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleReminderChange = this.handleReminderChange.bind(this);
   }
 
   handleChange(event) {
     this.setState({ [event.target.id]: event.target.value });
+  }
+
+  handleReminderChange(event) {
+    const text = event.target.value;
+    const diff = this.maxChars - text.length;
+
+    if(diff >= 0) {
+      this.setState({
+        title: text,
+        charsRemaining: this.maxChars - text.length
+      });
+    }
   }
 
   handleSubmit(event) {
@@ -40,27 +57,31 @@ class ConnectedForm extends Component {
     const { selectedDay } = this.props;
 
     this.props.addReminder({ id: selectedDay, reminder: {title, time, color, city} });
-    this.setState({ title: '', time: '', color: 0, city: '' });
-    
+    this.setState({ title: '', time: '', color: 0, city: '', charsRemaining: this.maxChars });
+
+    this.props.changeModalStatus(false);
   }
 
   render() {
     const { title, time, color, city } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div>
-          <label htmlFor='title'>Reminder: </label>
+      <form className="reminder-form" onSubmit={this.handleSubmit}>
+        <div className="reminder-form-section">
+          <label className="reminder-form-label" htmlFor='title'>Reminder (max {this.maxChars}): </label>
+          <div className={"max-chars" + (this.state.charsRemaining === 0 ? " chars-warning" : "")}>{this.state.charsRemaining}</div>
           <input
+            className="reminder-form-input text-area-input"
             type='text'
             id='title'
             value={title}
-            onChange={this.handleChange}
+            onChange={this.handleReminderChange}
             required
           />
         </div>
-        <div>
-          <label htmlFor='time'>Time: </label>
+        <div className="reminder-form-section">
+          <label className="reminder-form-label" htmlFor='time'>Time: </label>
           <input
+            className="reminder-form-input"
             type='time'
             id='time'
             value={time}
@@ -68,9 +89,10 @@ class ConnectedForm extends Component {
             required
           />
         </div>
-        <div>
-          <label htmlFor='city'>City: </label>
+        <div className="reminder-form-section">
+          <label className="reminder-form-label" htmlFor='city'>City: </label>
           <input
+            className="reminder-form-input"
             type='text'
             id='city'
             value={city}
@@ -78,15 +100,15 @@ class ConnectedForm extends Component {
             required
           />
         </div>
-        <div>
-          <label >Color: </label>
-          <select id="color" style={{backgroundColor: colors[color]}} onChange={this.handleChange} required>
+        <div className="reminder-form-section">
+          <label className="reminder-form-label" >Color: </label>
+          <select className="reminder-form-input" id="color" style={{backgroundColor: colors[color]}} onChange={this.handleChange} required>
             {colors.map((col, index) => (
               <option value={index} style={{backgroundColor: col}}></option>
             ))}
           </select>
         </div>
-        <button type='submit'>Save</button>
+        <Button className="reminder-form-btn" type="submit">Save</Button>
       </form>
     );
   }

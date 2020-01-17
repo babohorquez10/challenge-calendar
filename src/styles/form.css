@@ -1,3 +1,31 @@
-/* select option:hover {
-  box-shadow: 0 0 10px 100px #1882A8 inset;
-} */
+.reminder-form-label {
+  width: 100%;
+  margin: 0px;
+}
+
+.reminder-form-section {
+  margin-bottom: 15px;
+}
+
+.reminder-form-input {
+  width: 50%;
+}
+
+.text-area-input {
+  width: 100%;
+}
+
+.max-chars {
+  font-size: 13px;
+  color: #707070;
+}
+
+.max-chars.chars-warning {
+  color: red;
+}
+
+.reminder-form .reminder-form-btn {
+  display: block;
+  margin: 0 auto;
+  width: 30%;
+}

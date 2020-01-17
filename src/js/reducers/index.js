@@ -1,5 +1,6 @@
 import { ADD_REMINDER } from '../constants/action-types';
 import { CHANGE_SELECTED_DAY } from '../constants/action-types';
+import { HIDE_MODAL } from '../constants/action-types';
 
 const initialState = {
   days: [
@@ -7,7 +8,8 @@ const initialState = {
     {id: 12, reminders: []}, {id: 13, reminders: []}, {id: 14, reminders: []}, {id: 15, reminders: []}, {id: 16, reminders: []}, {id: 17, reminders: []}, {id: 18, reminders: []}, {id: 19, reminders: []}, {id: 20, reminders: []}, {id: 21, reminders: []}, 
     {id: 22, reminders: []}, {id: 23, reminders: []}, {id: 24, reminders: []}, {id: 25, reminders: []}, {id: 26, reminders: []}, {id: 27, reminders: []}, {id: 28, reminders: []}, {id: 29, reminders: []}, {id: 30, reminders: []}, {id: 31, reminders: []}
   ],
-  selectedDay: 1
+  selectedDay: 1,
+  showModal: false
 };
 
 function rootReducer(state = initialState, action) {
@@ -28,7 +30,13 @@ function rootReducer(state = initialState, action) {
 
     return {
       ...state,
-      selectedDay: action.payload.day
+      selectedDay: action.payload.day,
+      showModal: true
+    }
+  } else if (action.type === HIDE_MODAL) {
+    return {
+      ...state,
+      showModal: false
     }
   }
 

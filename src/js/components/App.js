@@ -1,5 +1,6 @@
 import React from 'react';
 import Calendar from './Calendar';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => (
   

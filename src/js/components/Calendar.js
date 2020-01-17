@@ -2,14 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Week from './Week';
 import Form from './Form';
+import { Modal } from 'react-bootstrap';
+import { hideModal } from '../actions/index';
 
 const mapStateToProps = state => {
-  return { days: state.days, selectedDay: state.selectedDay };
+  return { days: state.days, selectedDay: state.selectedDay, showModal: state.showModal };
 };
+
+function mapDispatchToProps(dispatch) {
+  return {
+    hideModal: el => dispatch(hideModal( ))
+  };
+}
 
 class ConnectedCalendar extends React.Component {
   
   render() {
+    
     return (
       <div className="container">
         <div className="row">
@@ -25,23 +34,19 @@ class ConnectedCalendar extends React.Component {
           this.mapDays().map(el => (
           <Week days={el} />
         ))}
-        <div className="modal fade" id="modalForm" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Add new reminder</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                {'Day: ' + this.props.selectedDay}
-                <Form />
-              </div>
-            </div>
-          </div>
-        </div>
+
+        <Modal show={this.props.showModal} onHide={this.props.hideModal} animation={true}>
+          <Modal.Header closeButton >
+            <Modal.Title>Add new reminder</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {'Day: ' + this.props.selectedDay}
+            <Form changeModalStatus={this.props.hideModal} />
+          </Modal.Body>
+        </Modal>
+        
       </div>
+      
     );
   }
 
@@ -60,6 +65,6 @@ class ConnectedCalendar extends React.Component {
   }
 }
 
-const Calendar = connect(mapStateToProps)(ConnectedCalendar);
+const Calendar = connect(mapStateToProps, mapDispatchToProps)(ConnectedCalendar);
 
 export default Calendar;
