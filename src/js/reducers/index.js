@@ -1,6 +1,7 @@
 import { ADD_REMINDER } from '../constants/action-types';
 import { EDIT_REMINDER } from '../constants/action-types';
 import { SHOW_MODAL_ADD_FORM } from '../constants/action-types';
+import { SHOW_MODAL_EDIT_FORM } from '../constants/action-types';
 import { CHANGE_SELECTED_DAY } from '../constants/action-types';
 import { HIDE_MODAL } from '../constants/action-types';
 
@@ -13,13 +14,15 @@ const initialState = {
   selectedDay: 1,
   showModal: false,
   viewReminders: true,
-  showAddForm: false
+  showAddForm: false,
+  showEditForm: false,
+  reminderToEdit: 0
 };
 
 function rootReducer(state = initialState, action) {
   if (action.type === ADD_REMINDER) {
 
-    var payload = action.payload;
+    const payload = action.payload;
 
     const newArray = JSON.parse(JSON.stringify(state.days)); // This creates a deep copy
     const index = newArray.findIndex(x => x.id === payload.id);
@@ -35,7 +38,24 @@ function rootReducer(state = initialState, action) {
     };
 
   } else if (action.type === EDIT_REMINDER) { 
+    const payload = action.payload;
 
+    const newArray = JSON.parse(JSON.stringify(state.days)); // This creates a deep copy
+    const index = newArray.findIndex(x => x.id === state.selectedDay);
+    const index2 = state.days[index].reminders.findIndex(x => x.id === state.reminderToEdit);
+    const newReminder = payload.reminder;
+
+    newReminder.id = state.reminderToEdit;
+
+    newArray[index].reminders[index2] = newReminder;
+
+    return {
+      ...state,
+      days: newArray,
+      viewReminders: true,
+      showAddForm: false
+    };
+    
   } else if (action.type === CHANGE_SELECTED_DAY) {
 
     return {
@@ -48,13 +68,25 @@ function rootReducer(state = initialState, action) {
       ...state,
       showModal: false,
       viewReminders: true,
-      showAddForm: false
+      showAddForm: false,
+      showEditForm: false
     }
   } else if(action.type === SHOW_MODAL_ADD_FORM) {
     return {
       ...state,
       viewReminders: false,
-      showAddForm: true
+      showAddForm: true,
+      showEditForm: false
+    }
+  } else if(action.type === SHOW_MODAL_EDIT_FORM) {
+    const payload = action.payload;
+
+    return {
+      ...state,
+      viewReminders: false,
+      showAddForm: false,
+      showEditForm: true,
+      reminderToEdit: payload.reminderId
     }
   }
 

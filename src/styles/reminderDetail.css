@@ -7,3 +7,14 @@
 .reminder-detail-title {
   font-size: 22px;
 }
+
+.edit-reminder {
+  height: 0;
+  width: 100%;
+}
+
+.edit-reminder i {
+  float: right;
+  font-size: 18px;
+  cursor: pointer;
+}

@@ -13,7 +13,8 @@ const mapStateToProps = state => {
     selectedDay: state.selectedDay, 
     showModal: state.showModal,
     viewReminders: state.viewReminders,
-    showAddForm: state.showAddForm
+    showAddForm: state.showAddForm,
+    showEditForm: state.showEditForm
   };
 };
 
@@ -44,11 +45,12 @@ class ConnectedCalendar extends React.Component {
           <Week days={el} />
         ))}
 
-        <Modal clasName="reminders-modal" show={this.props.showModal} onHide={this.props.hideModal} animation={true}>
+        <Modal className="reminders-modal" show={this.props.showModal} onHide={this.props.hideModal} animation={true}>
           <Modal.Header closeButton >
             <Modal.Title>
               {this.props.viewReminders ? 'Reminders' : ''}
               {this.props.showAddForm ? 'Add new reminder' : ''}
+              {this.props.showEditForm ? 'Edit reminder' : ''}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -61,7 +63,7 @@ class ConnectedCalendar extends React.Component {
                 </>
               ) : null
             }
-            {this.props.showAddForm ?
+            {this.props.showAddForm || this.props.showEditForm ?
               <Form changeModalStatus={this.props.hideModal} /> : null
             }
           </Modal.Body>

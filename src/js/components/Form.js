@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addReminder } from '../actions/index';
+import { editReminder } from '../actions/index';
 import '../../styles/form.css';
 import { colors } from '../utilities/constants';
 import { Button } from 'react-bootstrap';
 
 function mapDispatchToProps(dispatch) {
   return {
-    addReminder: reminder => dispatch(addReminder(reminder))
+    addReminder: reminder => dispatch(addReminder(reminder)),
+    editReminder: reminder => dispatch(editReminder(reminder))
   };
 }
 
 const mapStateToProps = state => {
-  return { selectedDay: state.selectedDay };
+  return { 
+    selectedDay: state.selectedDay, 
+    showEditForm: state.showEditForm, 
+    reminderToEdit: state.reminderToEdit,
+    days: state.days
+  };
 };
 
 class ConnectedForm extends Component {
@@ -22,12 +29,17 @@ class ConnectedForm extends Component {
   constructor(props) {
     super(props);
 
+    const index = props.days.findIndex(x => x.id === props.selectedDay);
+    const index2 = props.days[index].reminders.findIndex(x => x.id === props.reminderToEdit);
+    const currentReminder = props.days[index].reminders[index2];
+    const { showEditForm } = props;
+
     this.state = {
-      title: '',
-      time: '',
-      color: 0,
-      city: '',
-      charsRemaining: this.maxChars
+      title: showEditForm ? currentReminder.title : '',
+      time: showEditForm ? currentReminder.time : '',
+      color: showEditForm ? currentReminder.color : 0,
+      city: showEditForm ? currentReminder.city : '',
+      charsRemaining: showEditForm ? (this.maxChars -currentReminder.title.length) : this.maxChars
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -53,10 +65,16 @@ class ConnectedForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { title, time, color, city } = this.state;
-    const { selectedDay } = this.props;
 
-    this.props.addReminder({ id: selectedDay, reminder: {title, time, color, city} });
+    const { title, time, color, city } = this.state;
+    const { selectedDay, showEditForm } = this.props;
+
+    if(showEditForm) {
+      this.props.editReminder({ reminder: {title, time, color, city} });
+    } else {
+      this.props.addReminder({ id: selectedDay, reminder: {title, time, color, city} });
+    }
+
     this.setState({ title: '', time: '', color: 0, city: '', charsRemaining: this.maxChars });
 
     this.props.changeModalStatus(false);
@@ -104,11 +122,11 @@ class ConnectedForm extends Component {
           <label className="reminder-form-label" >Color: </label>
           <select className="reminder-form-input" id="color" style={{backgroundColor: colors[color]}} onChange={this.handleChange} required>
             {colors.map((col, index) => (
-              <option value={index} style={{backgroundColor: col}}></option>
+              <option key={col} value={index} style={{ backgroundColor: col }}></option>
             ))}
           </select>
         </div>
-        <Button className="reminder-form-btn" type="submit">Save</Button>
+        <Button className="reminder-form-btn" type="submit">{this.props.showEditForm ? 'Edit' : 'Save'}</Button>
       </form>
     );
   }
