@@ -1,0 +1,9 @@
+.reminder-detail {
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+.reminder-detail-title {
+  font-size: 22px;
+}

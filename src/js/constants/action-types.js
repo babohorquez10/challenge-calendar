@@ -1,4 +1,5 @@
 export const ADD_REMINDER = 'ADD_REMINDER';
 export const CHANGE_SELECTED_DAY = 'CHANGE_SELECTED_DAY';
 export const HIDE_MODAL = 'HIDE_MODAL';
-export const colors = ['#E3655B', '#CFD186', '#5B8C5A', '#596157', '#52414C'];
+export const SHOW_MODAL_ADD_FORM = 'SHOW_MODAL_ADD_FORM';
+export const EDIT_REMINDER = 'EDIT_REMINDER';

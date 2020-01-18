@@ -2,16 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Week from './Week';
 import Form from './Form';
-import { Modal } from 'react-bootstrap';
+import ReminderList from './ReminderList';
+import { Modal, Button } from 'react-bootstrap';
 import { hideModal } from '../actions/index';
+import { showAddReminderForm } from '../actions/index';
 
 const mapStateToProps = state => {
-  return { days: state.days, selectedDay: state.selectedDay, showModal: state.showModal };
+  return { 
+    days: state.days, 
+    selectedDay: state.selectedDay, 
+    showModal: state.showModal,
+    viewReminders: state.viewReminders,
+    showAddForm: state.showAddForm
+  };
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    hideModal: el => dispatch(hideModal( ))
+    hideModal: el => dispatch(hideModal( )),
+    showAddReminderForm: el => dispatch(showAddReminderForm())
   };
 }
 
@@ -35,13 +44,26 @@ class ConnectedCalendar extends React.Component {
           <Week days={el} />
         ))}
 
-        <Modal show={this.props.showModal} onHide={this.props.hideModal} animation={true}>
+        <Modal clasName="reminders-modal" show={this.props.showModal} onHide={this.props.hideModal} animation={true}>
           <Modal.Header closeButton >
-            <Modal.Title>Add new reminder</Modal.Title>
+            <Modal.Title>
+              {this.props.viewReminders ? 'Reminders' : ''}
+              {this.props.showAddForm ? 'Add new reminder' : ''}
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {'Day: ' + this.props.selectedDay}
-            <Form changeModalStatus={this.props.hideModal} />
+            <h4>{'Day: ' + this.props.selectedDay}</h4>
+            {this.props.viewReminders ?  
+              (
+                <>
+                  <ReminderList reminders={this.props.days[this.props.selectedDay - 1].reminders} /> 
+                  <Button className="modal-btn add-reminder-btn" onClick={this.props.showAddReminderForm}>Add reminder</Button>
+                </>
+              ) : null
+            }
+            {this.props.showAddForm ?
+              <Form changeModalStatus={this.props.hideModal} /> : null
+            }
           </Modal.Body>
         </Modal>
         

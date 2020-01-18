@@ -1,0 +1,10 @@
+
+.no-reminders-msg {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.modal-btn.add-reminder-btn {
+  display: block;
+  margin: 0 auto;
+}

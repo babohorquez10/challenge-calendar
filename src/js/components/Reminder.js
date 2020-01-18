@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../styles/reminder.css';
-import { colors } from '../constants/action-types';
+import { colors } from '../utilities/constants';
 
 const Reminder = ({ reminder }) => (
   <div 

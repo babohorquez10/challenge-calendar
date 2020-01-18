@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addReminder } from '../actions/index';
 import '../../styles/form.css';
-import { colors } from '../constants/action-types';
+import { colors } from '../utilities/constants';
 import { Button } from 'react-bootstrap';
 
 function mapDispatchToProps(dispatch) {
