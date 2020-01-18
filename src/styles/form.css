@@ -24,8 +24,13 @@
   color: red;
 }
 
-.reminder-form .reminder-form-btn {
-  display: block;
+.reminder-form .reminder-form-btns {
   margin: 0 auto;
   width: 30%;
+  width: fit-content;
+}
+
+.reminder-form .reminder-form-btns .reminder-form-btn {
+  width: 100px;
+  margin: 0 10px;
 }

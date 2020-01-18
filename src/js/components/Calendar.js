@@ -20,8 +20,8 @@ const mapStateToProps = state => {
 
 function mapDispatchToProps(dispatch) {
   return {
-    hideModal: el => dispatch(hideModal( )),
-    showAddReminderForm: el => dispatch(showAddReminderForm())
+    hideModal: () => dispatch(hideModal( )),
+    showAddReminderForm: () => dispatch(showAddReminderForm())
   };
 }
 

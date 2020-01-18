@@ -4,9 +4,14 @@ import { CHANGE_SELECTED_DAY } from '../constants/action-types';
 import { HIDE_MODAL } from '../constants/action-types';
 import { SHOW_MODAL_ADD_FORM } from '../constants/action-types';
 import { SHOW_MODAL_EDIT_FORM } from '../constants/action-types';
+import { VIEW_REMINDERS } from '../constants/action-types';
 
 export function addReminder(payload) {
   return { type: ADD_REMINDER, payload };
+}
+
+export function viewReminders() {
+  return { type: VIEW_REMINDERS };
 }
 
 export function editReminder(payload) {

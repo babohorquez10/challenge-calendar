@@ -4,6 +4,7 @@ import { SHOW_MODAL_ADD_FORM } from '../constants/action-types';
 import { SHOW_MODAL_EDIT_FORM } from '../constants/action-types';
 import { CHANGE_SELECTED_DAY } from '../constants/action-types';
 import { HIDE_MODAL } from '../constants/action-types';
+import { VIEW_REMINDERS } from '../constants/action-types';
 
 const initialState = {
   days: [
@@ -87,6 +88,14 @@ function rootReducer(state = initialState, action) {
       showAddForm: false,
       showEditForm: true,
       reminderToEdit: payload.reminderId
+    }
+  
+  } else if(action.type === VIEW_REMINDERS) {
+    return {
+      ...state,
+      viewReminders: true,
+      showAddForm: false,
+      showEditForm: false
     }
   }
 

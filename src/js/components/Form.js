@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addReminder } from '../actions/index';
 import { editReminder } from '../actions/index';
+import { viewReminders } from '../actions/index';
 import '../../styles/form.css';
 import { colors } from '../utilities/constants';
 import { Button } from 'react-bootstrap';
@@ -9,7 +10,8 @@ import { Button } from 'react-bootstrap';
 function mapDispatchToProps(dispatch) {
   return {
     addReminder: reminder => dispatch(addReminder(reminder)),
-    editReminder: reminder => dispatch(editReminder(reminder))
+    editReminder: reminder => dispatch(editReminder(reminder)),
+    viewReminders: () => dispatch(viewReminders( ))
   };
 }
 
@@ -126,7 +128,10 @@ class ConnectedForm extends Component {
             ))}
           </select>
         </div>
-        <Button className="reminder-form-btn" type="submit">{this.props.showEditForm ? 'Edit' : 'Save'}</Button>
+        <div className="reminder-form-btns">
+          <Button className="reminder-form-btn" type="submit">{this.props.showEditForm ? 'Edit' : 'Save'}</Button>
+          <Button onClick={this.props.viewReminders} variant="secondary" className="reminder-form-btn cancel-form-btn" type="submit">Cancel</Button>
+        </div>
       </form>
     );
   }
