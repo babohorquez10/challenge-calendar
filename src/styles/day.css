@@ -1,5 +1,5 @@
 .day {
-  height: 12vh;
+  height: 80px;
   border-bottom: 1px solid #E0E0E0;
   border-right: 1px solid #E0E0E0;
   padding: 5px;
@@ -12,7 +12,8 @@
 }
 
 .day, .day-title {
-  width: 10vw;
+  width: 12vw;
+  max-width: 150px;
 }
 
 .day-title {

@@ -5,7 +5,7 @@ class Week extends React.Component {
 
   render() {
     return (
-    <div className="row">
+    <div className="week">
       {this.props.days.map((el, index) => (
         <Day day={el} weekend={index === 0 || index === 6} leftBorder={index === 0} />
       ))}

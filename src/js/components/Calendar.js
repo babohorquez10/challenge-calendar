@@ -30,8 +30,8 @@ class ConnectedCalendar extends React.Component {
   render() {
     
     return (
-      <div className="container">
-        <div className="row">
+      <div className="calendar-app">
+        <div className="week">
           <div className="day-title">Sunday</div>
           <div className="day-title">Monday</div>
           <div className="day-title">Tuesday</div>

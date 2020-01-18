@@ -2,3 +2,15 @@
   text-align: center;
   margin: 25px;
 }
+
+.week {
+  display: flex;
+}
+
+.week, .calendar-app {
+  width: fit-content;
+}
+
+.calendar-app {
+  margin: 0 auto;
+}
